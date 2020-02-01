@@ -6,18 +6,15 @@ if (typeof browser === "undefined" && typeof chrome === "object"){
     var browser = chrome; //On Chrome
     isChrome = true;
 }
-var search_custom_num = 8;
-var search_array =["google", "rambler", "baidu","bing","yahoo","sogou","haosou"];
+var search_custom_num = 15;
+var search_array =["google","baidu","bing","sogou"];
 
 var searchselect_array = 
 [
     ["Google","https://www.google.com/search?hl=zh-CN&newwindow=1&q=","q","https://www.google.com"],
-    ["Rambler","https://nova.rambler.ru/search?query=","query","https://nova.rambler.ru"],
     ["百度","https://www.baidu.com/s?wd=","wd","https://www.baidu.com"],
     ["必应","https://cn.bing.com/search?q=","q","https://cn.bing.com"],
-    ["雅虎","https://search.yahoo.com/search?p=","p","https://search.yahoo.com"],
-    ["搜狗","https://www.sogou.com/web?query=","query","https://www.sogou.com"],
-    ["360搜索","https://www.so.com/s?q=","q","https://www.so.com"],
+    ["搜狗","https://www.sogou.com/web?query=","query","https://www.sogou.com"]
 ];
 var searchhost_array =
 [
@@ -25,14 +22,10 @@ var searchhost_array =
     ["www.google.com.hk",0],
     ["ipv4.google.com",0],
     [/www.google(\.\w+){1,2}/,0],
-    ["r0.ru",1],
-    ["nova.rambler.ru",1],
-    ["www.baidu.com",2],
-    ["cn.bing.com",3],
-    ["www.bing.com",3],
-    ["search.yahoo.com",4],
-    ["www.sogou.com",5],
-    ["www.so.com",6]
+    ["www.baidu.com",1],
+    ["cn.bing.com",2],
+    ["www.bing.com",2],
+    ["www.sogou.com",3]
 ];
 
 function isEmpty(obj) {

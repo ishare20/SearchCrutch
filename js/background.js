@@ -231,6 +231,7 @@ if (!firstRun) {
         localStorage[cb_id] = "no";
     }
     localStorage["cb_0"] = "checked";
+    localStorage["cb_1"] = "checked";
     localStorage["cb_2"] = "checked";
     localStorage["cb_3"] = "checked";
     localStorage["firstRun"] = "true";

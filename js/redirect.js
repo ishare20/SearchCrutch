@@ -14,6 +14,10 @@ $("a_11").addEventListener("click",CheckRedirect);       //自定义搜索5
 $("a_12").addEventListener("click",CheckRedirect);       //自定义搜索6
 $("a_13").addEventListener("click",CheckRedirect);       //自定义搜索7
 $("a_14").addEventListener("click",CheckRedirect);       //自定义搜索8
+$("a_15").addEventListener("click",CheckRedirect);       //自定义搜索8
+$("a_16").addEventListener("click",CheckRedirect);       //自定义搜索8
+$("a_17").addEventListener("click",CheckRedirect);       //自定义搜索8
+$("a_18").addEventListener("click",CheckRedirect);       //自定义搜索8
 
 function CheckRedirect( ) {
     var index = this.id.substr("a_".length);

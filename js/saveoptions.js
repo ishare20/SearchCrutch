@@ -14,6 +14,10 @@ $("cb_11").addEventListener("click",save_options);       //自定义
 $("cb_12").addEventListener("click",save_options);       //自定义
 $("cb_13").addEventListener("click",save_options);       //自定义
 $("cb_14").addEventListener("click",save_options);       //自定义
+$("cb_15").addEventListener("click",save_options);
+$("cb_16").addEventListener("click",save_options);
+$("cb_17").addEventListener("click",save_options);
+$("cb_18").addEventListener("click",save_options);
 
 $("custom_name_0").addEventListener("input",save_options);          //自定义名称
 $("custom_search_0").addEventListener("input",save_options);        //自定义搜索
@@ -31,6 +35,28 @@ $("custom_name_6").addEventListener("input",save_options);          //自定义�
 $("custom_search_6").addEventListener("input",save_options);        //自定义搜索
 $("custom_name_7").addEventListener("input",save_options);          //自定义名称
 $("custom_search_7").addEventListener("input",save_options);        //自定义搜索
+$("custom_name_8").addEventListener("input",save_options);
+$("custom_search_8").addEventListener("input",save_options);
+$("custom_name_9").addEventListener("input",save_options);
+$("custom_search_9").addEventListener("input",save_options);
+$("custom_name_10").addEventListener("input",save_options);
+$("custom_search_10").addEventListener("input",save_options);
+$("custom_name_11").addEventListener("input",save_options);
+$("custom_search_11").addEventListener("input",save_options);
+$("custom_name_12").addEventListener("input",save_options);
+$("custom_search_12").addEventListener("input",save_options);
+$("custom_name_13").addEventListener("input",save_options);
+$("custom_search_13").addEventListener("input",save_options);
+$("custom_name_14").addEventListener("input",save_options);
+$("custom_search_14").addEventListener("input",save_options);
+$("custom_name_15").addEventListener("input",save_options);
+$("custom_search_15").addEventListener("input",save_options);
+$("custom_name_16").addEventListener("input",save_options);
+$("custom_search_16").addEventListener("input",save_options);
+$("custom_name_17").addEventListener("input",save_options);
+$("custom_search_17").addEventListener("input",save_options);
+$("custom_name_18").addEventListener("input",save_options);
+$("custom_search_18").addEventListener("input",save_options);
 
 $("cb_switch").addEventListener("click",save_options);    //单击图标切换
 $("cb1_explain").addEventListener("click",explain);
