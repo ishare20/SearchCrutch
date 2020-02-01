@@ -1,6 +1,6 @@
 ## 搜索拐杖
 搜索拐杖（SearchCrutch），基于 KKKSou 发布的 Google 搜索拐杖修改而来，可以在搜索关键词不重输的情况下切换 Google，百度，必应等等搜索引擎。
-项目基本[https://github.com/xhhjin/SearchCrutch](https://github.com/xhhjin/SearchCrutch)修改。
+项目基于[https://github.com/xhhjin/SearchCrutch](https://github.com/xhhjin/SearchCrutch)修改。
 ## 特性
 去除内置的Rambler、雅虎、360搜索；  
 支持更多自定义搜索，支持15个自定义搜索，原来只支持6个自定义，想添加更多自定义搜索请用Beyond Compare比对这两个项目差异就可知道我是如何修改的。
