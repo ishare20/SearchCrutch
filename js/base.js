@@ -11,7 +11,7 @@ var search_array =["google","baidu","bing","sogou"];
 
 var searchselect_array = 
 [
-    ["Google","https://www.google.com/search?hl=zh-CN&newwindow=1&q=","q","https://www.google.com"],
+    ["Google","https://www.google.com/search?q=","q","https://www.google.com"],
     ["百度","https://www.baidu.com/s?wd=","wd","https://www.baidu.com"],
     ["必应","https://cn.bing.com/search?q=","q","https://cn.bing.com"],
     ["搜狗","https://www.sogou.com/web?query=","query","https://www.sogou.com"]
@@ -38,7 +38,7 @@ function insertCustomArray() {
     if (null == localStorage.getItem("custom_search_0"))
         return;
     var i;
-    for(i=search_array.length; i>7; i--) {  // 判断是否需要删除尾部追加的自定义搜索
+    for(i=search_array.length; i>16; i--) {  // 判断是否需要删除尾部追加的自定义搜索
         search_array.pop();
         searchhost_array.pop();
         searchselect_array.pop();
@@ -50,7 +50,7 @@ function insertCustomArray() {
         var custom_name  = localStorage[ custom_name_id ];
         var custom_search = localStorage[custom_search_id];	
         search_array.push(insert_array);
-        insert_array = [GetHost(custom_search), 7+i];
+        insert_array = [GetHost(custom_search), 16+i];
         searchhost_array.push(insert_array);
         var qstr_array = "q";
         var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;  // q=    search=    keyword=
