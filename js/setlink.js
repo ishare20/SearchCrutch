@@ -21,6 +21,7 @@ function onLoad() {
 }
 
 function SetNowLink( index ) {
+    
     for(var i=0; i<searchselect_array.length; i++) {
         var a_id = "a_" + i ;
         if( $( a_id) ) {

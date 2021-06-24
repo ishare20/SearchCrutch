@@ -19,12 +19,8 @@ var searchselect_array =
 var searchhost_array =
 [
     ["www.google.com",0],
-    ["www.google.com.hk",0],
-    ["ipv4.google.com",0],
-    [/www.google(\.\w+){1,2}/,0],
     ["www.baidu.com",1],
     ["cn.bing.com",2],
-    ["www.bing.com",2],
     ["www.sogou.com",3]
 ];
 
@@ -38,7 +34,7 @@ function insertCustomArray() {
     if (null == localStorage.getItem("custom_search_0"))
         return;
     var i;
-    for(i=search_array.length; i>16; i--) {  // 判断是否需要删除尾部追加的自定义搜索
+    for(i=search_array.length; i>4; i--) {  // 判断是否需要删除尾部追加的自定义搜索
         search_array.pop();
         searchhost_array.pop();
         searchselect_array.pop();
@@ -50,7 +46,7 @@ function insertCustomArray() {
         var custom_name  = localStorage[ custom_name_id ];
         var custom_search = localStorage[custom_search_id];	
         search_array.push(insert_array);
-        insert_array = [GetHost(custom_search), 16+i];
+        insert_array = [GetHost(custom_search), 4+i];
         searchhost_array.push(insert_array);
         var qstr_array = "q";
         var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;  // q=    search=    keyword=
@@ -65,7 +61,7 @@ function insertCustomArray() {
                 qstr_array = "q";
             }
         }
-        insert_array = [custom_name, custom_search, qstr_array, "http://"+GetHost(custom_search)];
+        insert_array = [custom_name, custom_search, qstr_array, "https://"+GetHost(custom_search)];
         searchselect_array.push(insert_array);
     }
 }
