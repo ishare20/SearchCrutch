@@ -64,7 +64,6 @@ function redirect( index ) {
         } else {
             newurl = searchselect_array[index][3];
         }
-        console.log(newurl)
 
         browser.tabs.update( tab.id, {url:newurl}, function(){});//*/
     });

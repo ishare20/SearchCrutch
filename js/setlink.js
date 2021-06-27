@@ -10,6 +10,7 @@ function onLoad() {
     }
     browser.tabs.query({currentWindow: true, active: true}, function(tabs){ 
         var tab = tabs[0];
+        
         insertCustomArray();
         var host = GetHost(tab.url);
         var i_host = inHostArray(host) ;
