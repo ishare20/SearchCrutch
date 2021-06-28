@@ -27,13 +27,21 @@ var searchhost_array =
     ];
 var arr
 createMenu()
+
+
+chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
+    if (request.ask === 'reload') {
+        createMenu()
+    }
+})
+
 function createMenu() {
     //创建右键菜单
     chrome.contextMenus.removeAll()
 
     arr = new Map()
 
-    console.log(searchselect_array)
+    
     for (i = 0; i < 4; i++) {
         var cb_id = "cb_" + i;
         if (localStorage[cb_id] == 'checked') {
@@ -48,7 +56,7 @@ function createMenu() {
         }
     }
    
-     for (i = 4; i < search_custom_num; i++) {
+     for (i = 4; i < search_custom_num+4; i++) {
             var cb_id = "cb_" + i;
             var cb_name = 'custom_name_' + (i - 4)
             if (localStorage[cb_id] == 'checked') {
@@ -64,27 +72,25 @@ function createMenu() {
 
         }
 
+        //console.log(searchselect_array)
+
 }
 
 function searchClick(info, tab) {
     var itemId = info.menuItemId
     var keyword = info.selectionText
-    // console.log('itemId:' + itemId)
-    // console.log('arr idx:' + arr.get(itemId))
-    // console.log('url:' + searchselect_array[arr.get(itemId)][1])
+    //console.log('itemId:' + itemId)
+    //console.log('arr idx:' + arr.get(itemId))
+    //console.log('url:' + searchselect_array[arr.get(itemId)][1])
 
     var searchUrl = searchselect_array[arr.get(itemId)][1]
     searchUrl = searchUrl.replace(/%s/i, '') + encodeURIComponent(keyword)
-    console.log('searchUrl:' + searchUrl)
+    //console.log('searchUrl:' + searchUrl)
     chrome.tabs.create({ url: searchUrl });
     // window.open(searchUrl)
 }
 
-chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
-    if (request.ask === 'reload') {
-        createMenu()
-    }
-})
+
 
 
 

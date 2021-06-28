@@ -80,7 +80,10 @@ function save_options() {
     }
     localStorage["cb_switch"] = $("cb_switch").checked ? "checked" : "no";
     localStorage["cb_autosync"] = $("cb_autosync").checked ? "checked" : "no";
-   
+  
+    chrome.extension.sendRequest({
+        ask: 'reload'
+      })
    
 
     var statusDiv = document.createElement("div");
@@ -98,9 +101,7 @@ function save_options() {
     setTimeout(function () { document.body.removeChild(statusDiv); }, 1000);
 
      
-     chrome.extension.sendRequest({
-        ask: 'reload'
-      })
+     
     //createMenu();
     
 }

@@ -213,10 +213,6 @@ browser.storage.onChanged.addListener(function (changes, area) {
 
 var firstRun = (localStorage["firstRun"] == "true");
 if (!firstRun) {
-
-   
-    
-
     browser.tabs.create({ url: "options.html" }, function () { });
     if (null == localStorage.getItem("cb_autosync"))
         localStorage["cb_autosync"] = "checked";
@@ -232,10 +228,7 @@ if (!firstRun) {
     }
     for (i = 0; i < search_array.length + search_custom_num; i++) { // 13 = search_array.length+search_custom_num   
         var cb_id = "cb_" + i;
-        
         localStorage[cb_id] = "no";
-
-       
     }
 
 
