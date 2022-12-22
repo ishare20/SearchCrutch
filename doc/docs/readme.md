@@ -40,8 +40,9 @@ Youtube|https://www.youtube.com/results?search_query=%s
 ![][2]
 ![][3]
 
-## [视频演示](https://www.bilibili.com/video/BV1mf4y1L7ne)
+## 视频演示
 
+<iframe src="//player.bilibili.com/player.html?aid=291584434&bvid=BV1mf4y1L7ne&cid=365096319&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="450px"> </iframe>
 
 ## 项目地址
 [https://github.com/ishare20/SearchCrutch](https://github.com/ishare20/SearchCrutch)
