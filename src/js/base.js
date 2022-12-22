@@ -1,5 +1,9 @@
 /* exported $ isEmpty insertCustomArray inHostArray GetUrlParms getSearch dataBackup dataRecover */
-function $(objStr) { return document.getElementById(objStr); }
+function $(objStr) {
+    return document.getElementById(objStr);
+}
+
+
 // Avoid 'chrome' namespace
 var isChrome = false; //On Chrome
 if (typeof browser === "undefined" && typeof chrome === "object") {
@@ -25,8 +29,6 @@ var searchhost_array =
         ["www.sogou.com", 3]
 
     ];
-var arr
-createMenu()
 
 
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
@@ -35,71 +37,57 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
     }
 })
 
+
+function searchClick(info) {
+    let arr = JSON.parse(localStorage.getItem("searchArray"))
+    var itemId = info.menuItemId
+    var keyword = info.selectionText
+    var searchUrl = searchselect_array[arr[itemId]][1]
+    searchUrl = searchUrl.replace(/%s/i, '') + encodeURIComponent(keyword)
+    chrome.tabs.create({url: searchUrl});
+}
+
+
 function createMenu() {
-    //创建右键菜单
+    let arr = {};
     chrome.contextMenus.removeAll()
-
-    arr = new Map()
-
-    
-    for (i = 0; i < 4; i++) {
-        var cb_id = "cb_" + i;
-        if (localStorage[cb_id] == 'checked') {
-            var setting = {
+    for (let i = 0; i < 4; i++) {
+        let cb_id = "cb_" + i;
+        if (localStorage[cb_id] === 'checked') {
+            let setting = {
                 title: searchselect_array[i][0],
                 contexts: ["selection"],
                 onclick: searchClick,
-            }
-            var id = chrome.contextMenus.create(setting)
-            //arr.push(id)
-            arr.set(id, i)
+            };
+            const id = chrome.contextMenus.create(setting);
+            arr[id] = i
         }
     }
-   
-     for (i = 4; i < search_custom_num+4; i++) {
-            var cb_id = "cb_" + i;
-            var cb_name = 'custom_name_' + (i - 4)
-            if (localStorage[cb_id] == 'checked') {
-                var setting = {
-                    title: localStorage[cb_name],
-                    contexts: ["selection"],
-                    onclick: searchClick
-                }
-                var cid = chrome.contextMenus.create(setting)
-                //arr.push(cid)
-                arr.set(cid, i)
-            }
 
+    for (let i = 4; i < search_custom_num + 4; i++) {
+        let cb_id = "cb_" + i;
+        const cb_name = 'custom_name_' + (i - 4);
+        if (localStorage[cb_id] === 'checked') {
+            let setting = {
+                title: localStorage[cb_name],
+                contexts: ["selection"],
+                onclick: searchClick,
+            };
+            const cid = chrome.contextMenus.create(setting);
+            arr[cid] = i
         }
-
-        //console.log(searchselect_array)
-
+    }
+    localStorage.setItem("searchArray", JSON.stringify(arr))
 }
-
-function searchClick(info, tab) {
-    var itemId = info.menuItemId
-    var keyword = info.selectionText
-    //console.log('itemId:' + itemId)
-    //console.log('arr idx:' + arr.get(itemId))
-    //console.log('url:' + searchselect_array[arr.get(itemId)][1])
-
-    var searchUrl = searchselect_array[arr.get(itemId)][1]
-    searchUrl = searchUrl.replace(/%s/i, '') + encodeURIComponent(keyword)
-    //console.log('searchUrl:' + searchUrl)
-    chrome.tabs.create({ url: searchUrl });
-    // window.open(searchUrl)
-}
-
-
-
 
 
 function isEmpty(obj) {
-    for (var name in obj) {
+    for (const name in obj) {
         return false;
     }
     return true;
 }
+
 function insertCustomArray() {
     if (null == localStorage.getItem("custom_search_0"))
         return;
@@ -138,6 +126,7 @@ function insertCustomArray() {
     }
 
 }
+
 function inHostArray(host) {
     for (var i = 0; i < searchhost_array.length; i++) {
         if (host.match(searchhost_array[i][0]) != null)
@@ -145,6 +134,7 @@ function inHostArray(host) {
     }
     return -1;
 }
+
 function GetUrlParms(hrefstr) {
     var args = new Object();
     hrefstr = decodeURI(hrefstr);
@@ -187,6 +177,7 @@ function GetUrlParms(hrefstr) {
     }
     return args;
 }
+
 function GetHost(url) {
     var pos = url.indexOf("//");
     var host;
@@ -201,6 +192,7 @@ function GetHost(url) {
     }
     return host.toLowerCase();
 }
+
 function getSearch(host) {
     if (host) {
         for (var i = 0; i < search_array.length; i++) {
@@ -209,6 +201,7 @@ function getSearch(host) {
         }
     }
 }
+
 function dataBackup() {
     var data = new Object();
     for (var i = 0; i < searchselect_array.length + search_custom_num; i++) {
@@ -222,11 +215,13 @@ function dataBackup() {
         data[custom_search_id] = localStorage[custom_search_id];
     }
     data["cb_switch"] = localStorage["cb_switch"];
+    data["cb_switch_open_new_tab"] = localStorage["cb_switch_open_new_tab"];
     data["cb_autosync"] = localStorage["cb_autosync"];
     data["backup_data"] = true;
     if (isChrome) {
         browser.storage.sync.clear(function () {
-            browser.storage.sync.set(data, function () { });
+            browser.storage.sync.set(data, function () {
+            });
         });
     } else {
         browser.storage.local.clear().then(() => {
@@ -234,6 +229,7 @@ function dataBackup() {
         }, null);
     }
 }
+
 function dataRecover() {
     for (var i = 0; i < search_array.length + search_custom_num; i++) {
         var cb_id = "cb_" + i;
@@ -276,6 +272,9 @@ function dataRecover() {
         browser.storage.sync.get("cb_switch", function (item) {
             localStorage["cb_switch"] = item.cb_switch;
         });
+        browser.storage.sync.get("cb_switch_open_new_tab", function (item) {
+            localStorage["cb_switch_open_new_tab"] = item.cb_switch_open_new_tab;
+        });
         browser.storage.sync.get("cb_autosync", function (item) {
             localStorage["cb_autosync"] = item.cb_autosync;
         });
@@ -283,8 +282,15 @@ function dataRecover() {
         browser.storage.sync.get("cb_switch").then((item) => {
             localStorage["cb_switch"] = item.cb_switch;
         }, null);
+
+        browser.storage.sync.get("cb_switch_open_new_tab", function (item) {
+            localStorage["cb_switch_open_new_tab"] = item.cb_switch_open_new_tab;
+        });
         browser.storage.sync.get("cb_autosync").then((item) => {
             localStorage["cb_autosync"] = item.cb_autosync;
         }, null);
     }
 }
+
+
+createMenu()

@@ -1,8 +1,8 @@
 /* global searchselect_array search_custom_num isEmpty  dataBackup dataRecover */
-$("cb_0").addEventListener("click",save_options);        //谷歌
-$("cb_1").addEventListener("click",save_options);        //谷歌复原
-$("cb_2").addEventListener("click",save_options);        //百度
-$("cb_3").addEventListener("click",save_options);        //必应
+$("cb_0").addEventListener("click", save_options);        //谷歌
+$("cb_1").addEventListener("click", save_options);        //谷歌复原
+$("cb_2").addEventListener("click", save_options);        //百度
+$("cb_3").addEventListener("click", save_options);        //必应
 $("cb_4").addEventListener("click", save_options);        //雅虎
 $("cb_5").addEventListener("click", save_options);        //搜狗
 $("cb_6").addEventListener("click", save_options);        //360
@@ -59,6 +59,7 @@ $("custom_search_14").addEventListener("input", save_options);
 // $("custom_search_18").addEventListener("input",save_options);
 
 $("cb_switch").addEventListener("click", save_options);    //单击图标切换
+$("cb_switch_open_new_tab").addEventListener("click", save_options);    //单击图标切换
 //$("cb1_explain").addEventListener("click", explain);
 
 $("cb_autosync").addEventListener("click", save_options);      //自动同步云端数据
@@ -79,12 +80,12 @@ function save_options() {
         localStorage[custom_search_id] = $(custom_search_id).value;
     }
     localStorage["cb_switch"] = $("cb_switch").checked ? "checked" : "no";
+    localStorage["cb_switch_open_new_tab"] = $("cb_switch_open_new_tab").checked ? "checked" : "no";
     localStorage["cb_autosync"] = $("cb_autosync").checked ? "checked" : "no";
-  
     chrome.extension.sendRequest({
         ask: 'reload'
-      })
-   
+    })
+
 
     var statusDiv = document.createElement("div");
     statusDiv.textContent = "选项已保存";
@@ -98,12 +99,13 @@ function save_options() {
     statusDiv.style.top = (parseInt(document.body.scrollTop) + 0) + "px";
     statusDiv.style.left = (parseInt(document.body.scrollWidth) - 300) / 2 + "px";
     document.body.appendChild(statusDiv);
-    setTimeout(function () { document.body.removeChild(statusDiv); }, 1000);
+    setTimeout(function () {
+        document.body.removeChild(statusDiv);
+    }, 1000);
 
-     
-     
+
     //createMenu();
-    
+
 }
 
 function explain() {

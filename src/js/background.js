@@ -9,9 +9,9 @@ function checkForValidUrl(tabId, changeInfo, tab) {
         return;
     }
     if (-1 < tab.url.substr(7, 25).indexOf("www.google.com/reader")) {
-        browser.pageAction.setPopup({ popup: "", tabId: tabId });
-        browser.pageAction.setIcon({ path: "img/icon-38-b.png", tabId: tabId });
-        browser.pageAction.setTitle({ title: "一键切换HTTP/HTTPS", tabId: tabId });
+        browser.pageAction.setPopup({popup: "", tabId: tabId});
+        browser.pageAction.setIcon({path: "img/icon-38-b.png", tabId: tabId});
+        browser.pageAction.setTitle({title: "一键切换HTTP/HTTPS", tabId: tabId});
         browser.pageAction.show(tabId);
         return;
     }
@@ -21,15 +21,15 @@ function checkForValidUrl(tabId, changeInfo, tab) {
     if (-1 < i_host) {
         //for direct visit from google refer url
         if ((1 == searchhost_array[i_host][1] || 0 == searchhost_array[i_host][1]) && (10 < tab.url.indexOf("url?") || 10 < tab.url.indexOf("imgres?"))) {
-            browser.pageAction.setPopup({ popup: "", tabId: tabId });
-            browser.pageAction.setIcon({ path: "img/icon-38-g.png", tabId: tabId });
-            browser.pageAction.setTitle({ title: "直接访问所在网页", tabId: tabId });
+            browser.pageAction.setPopup({popup: "", tabId: tabId});
+            browser.pageAction.setIcon({path: "img/icon-38-g.png", tabId: tabId});
+            browser.pageAction.setTitle({title: "直接访问所在网页", tabId: tabId});
             browser.pageAction.show(tabId);
             return;
         }
         if ("checked" == localStorage["cb_switch"]) {
-            browser.pageAction.setPopup({ popup: "", tabId: tab.id });
-            browser.pageAction.setTitle({ title: "点击切换搜索引擎", tabId: tabId });
+            browser.pageAction.setPopup({popup: "", tabId: tab.id});
+            browser.pageAction.setTitle({title: "点击切换搜索引擎", tabId: tabId});
             browser.pageAction.show(tabId);
             return;
         }
@@ -42,6 +42,8 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 browser.tabs.onUpdated.addListener(checkForValidUrl);
 
 function ActionClick(tab) {
+    var isOpenNewTab = localStorage["cb_switch_open_new_tab"] === 'checked'
+
     if (-1 < tab.url.substr(7, 25).indexOf("www.google.com/reader")) {
         var oldurl = tab.url;
         var newurl = oldurl;
@@ -51,9 +53,15 @@ function ActionClick(tab) {
             else
                 newurl = "https" + oldurl.substr(4);
         }
-        browser.tabs.update(tab.id, { url: newurl }, function () { });
+        if (isOpenNewTab) {
+            chrome.tabs.create({url: newurl});
+        } else {
+            browser.tabs.update(tab.id, {url: newurl}, function () {
+            });
+        }
+
     } else if ("checked" == localStorage["cb_switch"]) {
-        browser.pageAction.setIcon({ path: "img/icon-38-b.png", tabId: tab.id });
+        browser.pageAction.setIcon({path: "img/icon-38-b.png", tabId: tab.id});
         var index = 0;
         insertCustomArray();
         var host = GetHost(tab.url);
@@ -100,17 +108,34 @@ function ActionClick(tab) {
         } else {
             newurl = searchselect_array[index][3];
         }
+        if (isOpenNewTab) {
+            chrome.tabs.create({url: newurl})
+        } else {
+            browser.tabs.update(tab.id, {url: newurl}, function () {
+            });
+        }
 
-        browser.tabs.update(tab.id, { url: newurl }, function () { });
     } else {
         args = GetUrlParms(tab.url);
         var ori_url = args["url"];
-        if (ori_url)
-            browser.tabs.update(tab.id, { url: decodeURIComponent(ori_url) }, function () { });
-        else {
+        if (ori_url) {
+            if (isOpenNewTab) {
+                chrome.tabs.create({url: decodeURIComponent(ori_url)})
+            } else {
+                browser.tabs.update(tab.id, {url: decodeURIComponent(ori_url)}, function () {
+                });
+            }
+        } else {
             ori_url = args["imgrefurl"];
-            if (ori_url)
-                browser.tabs.update(tab.id, { url: decodeURIComponent(ori_url) }, function () { });
+            if (ori_url) {
+                if (isOpenNewTab) {
+                    chrome.tabs.create({url: decodeURIComponent(ori_url)})
+                } else {
+                    browser.tabs.update(tab.id, {url: decodeURIComponent(ori_url)}, function () {
+                    });
+                }
+            }
+
         }
     }
 }
@@ -119,7 +144,7 @@ function ActionClick(tab) {
 browser.pageAction.onClicked.addListener(ActionClick);
 
 function ActionShortcut(tab, flag) {
-    browser.pageAction.setIcon({ path: "img/icon-38-b.png", tabId: tab.id });
+    browser.pageAction.setIcon({path: "img/icon-38-b.png", tabId: tab.id});
     var index = 0;
     insertCustomArray();
     var host = GetHost(tab.url);
@@ -177,20 +202,19 @@ function ActionShortcut(tab, flag) {
     } else {
         newurl = searchselect_array[index][3];
     }
-
-    browser.tabs.update(tab.id, { url: newurl }, function () { });
+    browser.tabs.update(tab.id, {url: newurl}, function () {});
 }
 
 // Listen for these commands of shortcuts
 browser.commands.onCommand.addListener(function (command) {
     switch (command) {
         case "switch-pre":
-            browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+            browser.tabs.query({currentWindow: true, active: true}, function (tabs) {
                 ActionShortcut(tabs[0], command);
             });
             break;
         case "switch-next":
-            browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+            browser.tabs.query({currentWindow: true, active: true}, function (tabs) {
                 ActionShortcut(tabs[0], command);
             });
             break;
@@ -213,11 +237,14 @@ browser.storage.onChanged.addListener(function (changes, area) {
 
 var firstRun = (localStorage["firstRun"] == "true");
 if (!firstRun) {
-    browser.tabs.create({ url: "options.html" }, function () { });
+    browser.tabs.create({url: "options.html"}, function () {
+    });
     if (null == localStorage.getItem("cb_autosync"))
         localStorage["cb_autosync"] = "checked";
     if (null == localStorage.getItem("cb_switch"))
         localStorage["cb_switch"] = "no";
+    if (null == localStorage.getItem("cb_switch_open_new_tab"))
+        localStorage["cb_switch_open_new_tab"] = "no";
     for (var i = 0; i < search_custom_num; i++) { // 6 = search_custom_num
         var custom_name_id = "custom_name_" + i;
         var custom_search_id = "custom_search_" + i;
@@ -232,14 +259,11 @@ if (!firstRun) {
     }
 
 
-   
-
     localStorage["cb_0"] = "checked";
     localStorage["cb_1"] = "checked";
     localStorage["cb_2"] = "checked";
     localStorage["cb_3"] = "checked";
     localStorage["firstRun"] = "true";
-
 
 
     // Sync the backup data
