@@ -27,6 +27,11 @@ Twitter|https://twitter.com/search?q=%s&src=typed_query
 Youtube|https://www.youtube.com/results?search_query=%s
 
 ## 更新日志
+### v1.0.2
+**2023.11.9**
+
+修复右键搜索失效问题
+
 ### v1.0.1
 **2022.12.22**
 
@@ -51,7 +56,7 @@ Youtube|https://www.youtube.com/results?search_query=%s
 - Chrome浏览器
   下载插件压缩包，在Chrome扩展开启开发者模式后，点击加载已解压的扩展程序选择项目的文件夹即可安装成功
 
-[点击下载插件](https://caigua.lanzouo.com/idqO10j6v5yb)
+[点击下载插件](https://caigua.lanzouy.com/i8o4I1eardef)
 
 [1]: https://github.com/xhhjin/SearchCrutch
 [2]: https://ishare20.net/usr/uploads/2021/06/1758262184.png
