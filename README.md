@@ -1,5 +1,5 @@
 # 便捷搜索浏览器插件
-基于搜索拐杖开源项目二次开发，可以在搜索关键词不重输的情况下切换 Google，百度，必应等等搜索引擎，并支持添加自定义搜索引擎，支持右键搜索。
+在搜索关键词不重输的情况下切换 Google，百度，必应等等搜索引擎，并支持添加自定义搜索引擎，支持右键搜索。
 
 ## 功能介绍
 1. 使用 Google、百度、必应等等搜索时，显示切换搜索图标；
@@ -42,8 +42,6 @@ Youtube|https://www.youtube.com/results?search_query=%s
 
 ## [视频演示](https://www.bilibili.com/video/BV1mf4y1L7ne)
 
-## 项目地址
-[https://github.com/ishare20/SearchCrutch](https://github.com/ishare20/SearchCrutch)
 
 ## 安装教程
 - Edge浏览器

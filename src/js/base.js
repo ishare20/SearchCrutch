@@ -37,6 +37,10 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
     }
 })
 
+chrome.browserAction.onClicked.addListener(function (tab) {
+    createMenu()
+})
+
 
 function searchClick(info) {
     let arr = JSON.parse(localStorage.getItem("searchArray"))
@@ -44,7 +48,7 @@ function searchClick(info) {
     var keyword = info.selectionText
     var searchUrl = searchselect_array[arr[itemId]][1]
     searchUrl = searchUrl.replace(/%s/i, '') + encodeURIComponent(keyword)
-    chrome.tabs.create({url: searchUrl});
+    chrome.tabs.create({ url: searchUrl });
 }
 
 
